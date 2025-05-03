@@ -1,12 +1,10 @@
-const path = require('path');
-const fs = require('fs');
+import content from '../../data/content.json'; // Asegúrate de que la ruta sea correcta
 
-module.exports = (req, res) => {
-    try {
-        const filePath = path.join(process.cwd(), 'data', 'content.json');
-        const content = fs.readFileSync(filePath, 'utf8');
-        res.status(200).json(JSON.parse(content));
-    } catch (error) {
-        res.status(500).json({ error: 'Error al cargar content.json' });
-    }
-};
+export default async function handler(req, res) {
+  try {
+    res.status(200).json(content);
+  } catch (error) {
+    console.error('Error fetching content:', error);
+    res.status(500).json({ error: 'Failed to fetch content' });
+  }
+}
