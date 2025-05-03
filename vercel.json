@@ -5,6 +5,14 @@
             "use": "@vercel/static"
         },
         {
+            "src": "scripts.js",
+            "use": "@vercel/static"
+        },
+        {
+            "src": "styles.css",
+            "use": "@vercel/static"
+        },
+        {
             "src": "api/**/*.js",
             "use": "@vercel/node"
         }
@@ -16,7 +24,7 @@
         },
         {
             "src": "/(.*)",
-            "dest": "/index.html"
+            "dest": "/$1"
         }
     ]
 }
