@@ -1,0 +1,20 @@
+{
+    "name": "commanders-hub",
+    "version": "1.0.0",
+    "description": "Una aplicación web dedicada a los Washington Commanders: partidos, clasificaciones y contenidos exclusivos",
+    "main": "scripts.js",
+    "scripts": {
+        "start": "vite",
+        "build": "vite build",
+        "lint": "eslint .",
+        "format": "prettier --write ."
+    },
+    "keywords": ["Washington Commanders", "NFL", "fútbol americano"],
+    "author": "Tu Nombre",
+    "license": "ISC",
+    "devDependencies": {
+        "vite": "^5.0.0",
+        "eslint": "^8.0.0",
+        "prettier": "^3.0.0"
+    }
+}
