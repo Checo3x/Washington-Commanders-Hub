@@ -1,6 +1,7 @@
-const eventsUrl = 'http://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/28/schedule?season=2024';
-const standingsUrl = 'http://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/28?season=2024';
-const contentUrl = 'data/content.json';
+const baseUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : '';
+const eventsUrl = `${baseUrl}/api/espn-events`;
+const standingsUrl = `${baseUrl}/api/espn-standings`;
+const contentUrl = `${baseUrl}/api/content`;
 
 async function fetchTeamEvents() {
     const teamsDataDiv = document.getElementById('teams-data');
@@ -18,7 +19,6 @@ async function fetchTeamEvents() {
         const response = await fetch(eventsUrl);
         if (!response.ok) throw new Error('Error en la solicitud a la API');
         
-        // Verificar si la respuesta es JSON
         const contentType = response.headers.get('content-type');
         if (!contentType || !contentType.includes('application/json')) {
             throw new Error('La respuesta no es un JSON válido');
@@ -65,7 +65,6 @@ async function fetchStandingsData() {
         const response = await fetch(standingsUrl);
         if (!response.ok) throw new Error('Error en la solicitud a la API');
 
-        // Verificar si la respuesta es JSON
         const contentType = response.headers.get('content-type');
         if (!contentType || !contentType.includes('application/json')) {
             throw new Error('La respuesta no es un JSON válido');
@@ -102,11 +101,16 @@ async function fetchArticles() {
 
     try {
         const response = await fetch(contentUrl);
-        if (!response.ok) throw new Error('Error al cargar los artículos');
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Error al cargar content.json:', response.status, response.statusText, errorText);
+            throw new Error(`Error al cargar los artículos: ${response.status} ${response.statusText}`);
+        }
 
-        // Verificar si la respuesta es JSON
         const contentType = response.headers.get('content-type');
         if (!contentType || !contentType.includes('application/json')) {
+            const responseText = await response.text();
+            console.error('Respuesta no JSON recibida:', responseText);
             throw new Error('La respuesta no es un JSON válido');
         }
 
@@ -133,11 +137,16 @@ async function fetchPodcasts() {
 
     try {
         const response = await fetch(contentUrl);
-        if (!response.ok) throw new Error('Error al cargar los podcasts');
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Error al cargar content.json:', response.status, response.statusText, errorText);
+            throw new Error(`Error al cargar los podcasts: ${response.status} ${response.statusText}`);
+        }
 
-        // Verificar si la respuesta es JSON
         const contentType = response.headers.get('content-type');
         if (!contentType || !contentType.includes('application/json')) {
+            const responseText = await response.text();
+            console.error('Respuesta no JSON recibida:', responseText);
             throw new Error('La respuesta no es un JSON válido');
         }
 
