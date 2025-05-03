@@ -1,0 +1,24 @@
+{
+    "articles": [
+        {
+            "title": "Commanders en la NFC Championship 2025",
+            "summary": "Análisis de la actuación de los Commanders en su camino a la NFC Championship contra los Eagles.",
+            "link": "/articles/nfc-championship-2025"
+        },
+        {
+            "title": "Josh Conerly Jr.: Nuevo tackle de los Commanders",
+            "summary": "Perfil del nuevo tackle derecho seleccionado en el Draft 2025 por los Washington Commanders.",
+            "link": "/articles/josh-conerly-2025"
+        }
+    ],
+    "podcasts": [
+        {
+            "title": "Episodio 1: La temporada 2024 de los Commanders",
+            "src": "podcasts/podcast1.mp3"
+        },
+        {
+            "title": "Episodio 2: Análisis del Draft 2025",
+            "src": "podcasts/podcast2.mp3"
+        }
+    ]
+}
