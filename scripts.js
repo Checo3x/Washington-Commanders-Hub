@@ -1,7 +1,8 @@
-const baseUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : '';
-const eventsUrl = `${baseUrl}/api/espn-events`;
-const standingsUrl = `${baseUrl}/api/espn-standings`;
-const contentUrl = `${baseUrl}/api/content`;
+const eventsUrl = '/api/espn-events';
+const standingsUrl = '/api/espn-standings';
+const contentUrl = '/api/content';
+
+// El resto de tu código fetchTeamEvents, fetchStandingsData, fetchArticles, fetchPodcasts permanece igual
 
 async function fetchTeamEvents() {
     const teamsDataDiv = document.getElementById('teams-data');
