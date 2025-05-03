@@ -1,122 +1,52 @@
-/* General */
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
+    background: url('images/estadio.jpg') no-repeat center center fixed;
+    background-size: cover;
+    -webkit-filter: brightness(50%);
+    filter: brightness(50%);
+    color: #fff;
 }
 
-/* Header */
-header {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/commanders-bg.jpg');
-    background-size: cover;
-    background-position: center;
-    color: #fff;
-    padding: 40px 20px;
+nav {
+    background-color: #b22222;
+    padding: 10px;
     text-align: center;
 }
 
-header h1 {
-    margin: 0;
-    font-size: 2.5em;
-    font-weight: 700;
-    text-shadow: 2px 2px #811331; /* Borgoña oscuro */
-}
-
-/* Navigation */
-nav {
-    position: sticky;
-    top: 0;
-    background-color: #811331; /* Borgoña de los Commanders */
-    z-index: 100;
-}
-
-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-}
-
-nav ul li {
-    margin: 0 20px;
-}
-
-nav ul li a {
-    color: #ffb612; /* Dorado de los Commanders */
+nav a {
+    color: #ffd700;
+    margin: 0 15px;
     text-decoration: none;
-    font-size: 1.2em;
-    padding: 10px;
-    transition: background-color 0.3s;
+    font-weight: bold;
 }
 
-nav ul li a:hover {
-    background-color: #ffb612; /* Dorado */
-    color: #811331; /* Borgoña */
-    border-radius: 5px;
+h1 {
+    text-align: center;
+    color: #ffd700;
+    margin: 20px 0;
 }
 
-/* Sections */
 section {
-    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
     margin: 20px auto;
-    max-width: 1000px;
-    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('images/football-field-bg.jpg');
-    background-size: cover;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 80%;
+    max-width: 800px;
+    border-radius: 5px;
 }
 
 section h2 {
-    color: #811331; /* Borgoña */
-    font-weight: 700;
-    text-transform: uppercase;
+    color: #ffd700;
 }
 
-/* Teams Data */
-#teams-data img {
-    width: 40px;
-    height: auto;
-    margin: 5px;
-    vertical-align: middle;
-}
-
-#teams-data p, #temporada-data p {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 5px;
-}
-
-/* Articles and Podcasts */
-#articles-list article, #podcast-list .podcast-item {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    transition: transform 0.2s;
-}
-
-#articles-list article:hover, #podcast-list .podcast-item:hover {
-    transform: translateY(-5px);
-}
-
-#articles-list h3, #podcast-list h3 {
-    color: #811331; /* Borgoña */
-    font-weight: 700;
-}
-
-/* Loader */
 .loader {
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #811331; /* Borgoña */
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #ffd700;
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
+    width: 50px;
+    height: 50px;
     animation: spin 1s linear infinite;
     margin: 20px auto;
 }
@@ -126,49 +56,19 @@ section h2 {
     100% { transform: rotate(360deg); }
 }
 
-.error-message {
-    color: #811331; /* Borgoña */
-    text-align: center;
-}
-
-.error-message.hidden {
+.hidden {
     display: none;
 }
 
-/* Footer */
-footer {
-    background-color: #811331; /* Borgoña */
-    color: #ffb612; /* Dorado */
+.error-message {
+    color: #ff4500;
     text-align: center;
-    padding: 20px;
 }
 
-footer .social-links a {
-    color: #ffb612; /* Dorado */
-    margin: 0 10px;
-    text-decoration: none;
+article, .podcast-item {
+    margin: 10px 0;
 }
 
-footer .social-links a:hover {
-    text-decoration: underline;
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-    nav ul {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    nav ul li {
-        margin: 10px 0;
-    }
-
-    header h1 {
-        font-size: 1.8em;
-    }
-
-    section {
-        margin: 10px;
-    }
+audio {
+    width: 100%;
 }
