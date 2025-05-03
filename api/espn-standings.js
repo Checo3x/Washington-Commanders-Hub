@@ -1,14 +1,16 @@
-const fetch = require('node-fetch');
+const API_KEY = process.env.ESPN_API_KEY;
+const LEAGUE = 'nfl';
 
-module.exports = async (req, res) => {
-    try {
-        const response = await fetch('http://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/28?season=2024');
-        if (!response.ok) {
-            throw new Error('Error al obtener los datos de ESPN');
-        }
-        const data = await response.json();
-        res.status(200).json(data);
-    } catch (error) {
-        res.status(500).json({ error: 'Error al obtener los datos de ESPN' });
+export default async function handler(req, res) {
+  try {
+    const response = await fetch(`http://site.api.espn.com/apis/site/v2/sports/football/${LEAGUE}/standings?groups=all&limit=500&apikey=${API_KEY}`);
+    if (!response.ok) {
+      throw new Error(`Error en la petición a la API de ESPN: ${response.status}`);
     }
-};
+    const data = await response.json();
+    res.status(200).json(data);
+  } catch (error) {
+    console.error('Error fetching ESPN standings:', error);
+    res.status(500).json({ error: 'Failed to fetch ESPN standings' });
+  }
+}
