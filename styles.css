@@ -1,54 +1,128 @@
+/* Global Resets and Base Styles */
+html {
+    box-sizing: border-box; /* Better box model */
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
     background: url('images/estadio.jpg') no-repeat center center fixed;
     background-size: cover;
-    -webkit-filter: brightness(50%);
-    filter: brightness(50%);
-    color: #fff;
+    filter: brightness(0.6); 
+    color: #FFFFFF; 
+    line-height: 1.5; /* Base line-height for general readability */
 }
 
-nav {
-    background-color: #b22222;
-    padding: 10px;
+/* Header Styles */
+header {
+    background-image: url('images/commanders-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 50px 20px; /* Increased padding for more impact */
     text-align: center;
+    border-bottom: 3px solid #FFB612; /* Gold accent border */
+}
+
+/* Navigation Styles */
+nav {
+    background-color: #5A0025; /* Burgundy */
+    padding: 10px 0; /* Adjusted padding, ul will manage horizontal space */
+    text-align: center;
+    border-bottom: 2px solid #FFB612; /* Gold accent */
+}
+
+nav ul { /* Added for proper horizontal nav */
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li { /* Added for proper horizontal nav */
+    display: inline-block;
+    margin: 0; /* Reset margin, use padding on 'a' if needed for click area */
 }
 
 nav a {
-    color: #ffd700;
-    margin: 0 15px;
+    color: #FFB612; /* Gold */
+    padding: 10px 15px; /* Use padding for better clickable area */
+    margin: 0; /* Removed margin, li handles spacing if needed, or padding on 'a' */
     text-decoration: none;
     font-weight: bold;
+    font-size: 1.1em; 
+    transition: color 0.3s ease, background-color 0.3s ease; /* Added background transition */
+    display: inline-block; /* Ensure padding is applied correctly */
 }
 
-h1 {
+nav a:hover {
+    color: #FFFFFF; /* White on hover */
+    background-color: #4a001f; /* Slightly darker burgundy on hover */
+    text-decoration: none; /* Keep no underline for nav items */
+}
+
+/* Heading Styles */
+h1 { /* Likely in header */
     text-align: center;
-    color: #ffd700;
-    margin: 20px 0;
+    color: #FFB612; /* Gold */
+    margin-top: 0; /* Adjusted margin for h1 in header */
+    margin-bottom: 10px; /* Reduced bottom margin */
+    font-size: 3em; /* Slightly adjusted for better hierarchy */
+    font-weight: 700; /* Bolder H1 */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); 
 }
 
+h2 { /* General H2, used in sections */
+    color: #FFB612; /* Gold */
+    border-bottom: 1px solid #5A0025; /* Burgundy accent */
+    padding-bottom: 15px; /* Increased padding */
+    margin-top: 0; /* Sections provide top margin */
+    margin-bottom: 25px; /* Increased bottom margin for separation */
+    font-size: 2em; /* Consistent H2 size */
+}
+
+/* Section Styles */
 section {
-    background-color: rgba(0, 0, 0, 0.7);
-    margin: 20px auto;
-    padding: 20px;
-    width: 80%;
-    max-width: 800px;
-    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.8); /* Slightly more opaque for text */
+    margin: 30px auto; /* Increased vertical margin */
+    padding: 30px;    /* Increased padding */
+    width: 85%;       /* Slightly increased width */
+    max-width: 850px; /* Adjusted max-width */
+    border-radius: 8px; 
+    border: 1px solid #FFB612; /* Gold border */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.6); /* Enhanced shadow */
 }
 
-section h2 {
-    color: #ffd700;
+section p {
+    /* color: #FFFFFF; Inherited from body */
+    line-height: 1.7; /* Increased line-height for paragraphs in sections */
+    margin-bottom: 1em; /* Standard paragraph spacing */
 }
 
+/* General Link Styles (outside nav/footer) */
+a {
+    color: #FFB612; /* Gold */
+    text-decoration: none; 
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+a:hover, a:focus { /* Added :focus for accessibility */
+    color: #FFFFFF; /* White on hover/focus */
+    text-decoration: underline; 
+}
+
+/* Utility and Component Styles */
 .loader {
-    border: 8px solid #f3f3f3;
-    border-top: 8px solid #ffd700;
+    border: 8px solid #333333; 
+    border-top: 8px solid #FFB612; /* Gold spinner color */
     border-radius: 50%;
     width: 50px;
     height: 50px;
     animation: spin 1s linear infinite;
-    margin: 20px auto;
+    margin: 30px auto; /* Increased margin */
 }
 
 @keyframes spin {
@@ -61,14 +135,63 @@ section h2 {
 }
 
 .error-message {
-    color: #ff4500;
+    color: #FFCCCC; /* Lighter red text for better readability on dark bg */
+    background-color: rgba(100, 0, 0, 0.8); /* Darker, more opaque red background */
+    padding: 15px; /* Increased padding */
+    border-radius: 5px;
     text-align: center;
+    border: 1px solid #FFB612; /* Gold border */
+    margin: 20px 0; /* Added vertical margin */
 }
 
+/* Content-Specific Styles (Articles, Podcasts) */
 article, .podcast-item {
-    margin: 10px 0;
+    margin-bottom: 25px; 
+    padding-bottom: 15px;
+    border-bottom: 1px dashed #5A0025; /* Burgundy dashed separator */
+}
+
+article:last-child, .podcast-item:last-child {
+    border-bottom: none; /* Remove border for the last item */
+}
+
+article h3, .podcast-item h3 { /* Assuming H3s are used inside articles/podcasts */
+    color: #FFD700; /* A slightly different gold for sub-headings */
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.5em;
 }
 
 audio {
     width: 100%;
+    margin-top: 15px; /* Increased space */
+    border-radius: 5px;
+    /* Consider filter: invert(1) brightness(0.8) for a quick dark theme if needed, but default is fine */
+}
+
+/* Footer Styles */
+footer {
+    background-color: #5A0025; /* Burgundy */
+    color: #FFFFFF; /* White text */
+    padding: 40px 20px; /* Increased padding */
+    text-align: center;
+    margin-top: 50px; /* Increased space above footer */
+    border-top: 3px solid #FFB612; /* Gold accent border */
+}
+
+footer p {
+    margin: 0 0 15px 0; /* Increased bottom margin for paragraphs */
+    line-height: 1.6;
+}
+
+footer a {
+    color: #FFB612; /* Gold for links in footer */
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+footer a:hover, footer a:focus { /* Added :focus */
+    color: #FFFFFF; /* White on hover/focus */
+    text-decoration: underline;
 }
