@@ -11,22 +11,84 @@ body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    background: url('images/estadio.jpg') no-repeat center center fixed;
-    background-size: cover;
-    filter: brightness(0.6); 
     color: #FFFFFF; 
     line-height: 1.5; /* Base line-height for general readability */
+    position: relative; /* Needed for z-indexing of pseudo-element */
+    overflow-x: hidden; /* Prevent horizontal scrollbar from scaled pseudo-element */
+}
+
+body::before {
+    content: "";
+    position: fixed; /* Fixed positioning to cover viewport */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('images/estadio.jpg') no-repeat center center;
+    background-size: cover;
+    z-index: -1; /* Place it behind the body content */
+    animation: slowZoom 40s infinite alternate ease-in-out; /* Slow zoom animation */
+}
+
+@keyframes slowZoom {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.1); /* Subtle zoom to 110% */
+    }
 }
 
 /* Header Styles */
 header {
-    background-image: url('images/commanders-bg.jpg');
+    background-color: #3d0019; /* Darker burgundy base */
+    background-image: linear-gradient(to bottom, rgba(58, 0, 25, 0.85), rgba(20, 0, 8, 0.95)), url('images/commanders-bg.jpg');
     background-size: cover;
     background-position: center;
-    padding: 50px 20px; /* Increased padding for more impact */
+    background-blend-mode: multiply; /* Blend gradient with image */
+    padding: 60px 20px; /* Slightly increased padding */
     text-align: center;
-    border-bottom: 3px solid #FFB612; /* Gold accent border */
+    border-bottom: 5px solid #FFB612; /* Thicker Gold accent border */
+    position: relative; /* For potential pseudo-element borders if needed and for canvas positioning */
 }
+
+#header-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; /* Behind other header content */
+    pointer-events: none; /* Canvas should not intercept mouse events */
+}
+
+header::after { /* Adding a subtle darker line above the main gold border for depth */
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 5px; /* Position it just above the main border */
+    height: 3px;
+    background-color: #5A0025; /* Burgundy, slightly darker than gold for accent */
+    z-index: 0; /* Ensure it's behind content but visible - note: this will be under canvas if canvas is 0. Adjust if needed. */
+    /* Given header-particles is z-index 0, and this is also 0, they'd share.
+       Let's make canvas -1 if header::after is to be visible, or header::after 1 if it should be above canvas.
+       For particles behind everything, canvas should be lowest.
+       Let's adjust: canvas z-index to -1. Header content (h1, nav) needs z-index > -1.
+       The header::after is decorative for the border, so it should be visually part of the header block,
+       particles should be in the very back.
+    */
+}
+/* Let's refine z-indexing for header elements */
+header h1, header nav {
+    position: relative; /* Create stacking context */
+    z-index: 2; /* Above canvas and header::after */
+}
+header::after {
+    z-index: 1; /* Above canvas, below h1/nav */
+}
+/* Re-adjust #header-particles z-index in its own rule later if needed, but 0 should be fine if h1/nav are 2 and after is 1. */
+
 
 /* Navigation Styles */
 nav {
@@ -54,14 +116,18 @@ nav a {
     text-decoration: none;
     font-weight: bold;
     font-size: 1.1em; 
-    transition: color 0.3s ease, background-color 0.3s ease; /* Added background transition */
+    transition: color 0.3s ease, background-color 0.3s ease, transform 0.3s ease, border-bottom-color 0.3s ease; /* Added transform and border-bottom-color transition */
     display: inline-block; /* Ensure padding is applied correctly */
+    position: relative; /* Needed for pseudo-element positioning */
+    border-bottom: 2px solid transparent; /* For hover animation */
 }
 
-nav a:hover {
-    color: #FFFFFF; /* White on hover */
-    background-color: #4a001f; /* Slightly darker burgundy on hover */
+nav a:hover, nav a:focus { /* Combined hover and focus */
+    color: #FFFFFF; /* White on hover/focus */
+    background-color: #4a001f; /* Slightly darker burgundy on hover/focus */
     text-decoration: none; /* Keep no underline for nav items */
+    transform: scale(1.05); /* Subtle scale effect */
+    border-bottom-color: #FFB612; /* Gold border bottom on hover/focus */
 }
 
 /* Heading Styles */
@@ -72,16 +138,34 @@ h1 { /* Likely in header */
     margin-bottom: 10px; /* Reduced bottom margin */
     font-size: 3em; /* Slightly adjusted for better hierarchy */
     font-weight: 700; /* Bolder H1 */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); 
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    /* position: relative; already added above for z-index */
+    /* z-index: 2; already added above for z-index */
 }
 
 h2 { /* General H2, used in sections */
     color: #FFB612; /* Gold */
-    border-bottom: 1px solid #5A0025; /* Burgundy accent */
-    padding-bottom: 15px; /* Increased padding */
+    border-bottom: 3px solid #FFB612; /* Thicker Gold accent border */
+    padding-bottom: 10px; /* Adjusted padding for new border */
     margin-top: 0; /* Sections provide top margin */
-    margin-bottom: 25px; /* Increased bottom margin for separation */
-    font-size: 2em; /* Consistent H2 size */
+    margin-bottom: 30px; /* Increased bottom margin for separation */
+    font-size: 2.2em; /* Slightly larger font size */
+    font-weight: bold; /* Ensure it's bold */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Subtle text shadow */
+    position: relative; /* For pseudo-element positioning */
+    padding-left: 25px; /* Space for the pseudo-element */
+}
+
+h2::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 15px; /* Width of the decorative line */
+    height: 4px; /* Thickness of the line */
+    background-color: #FFB612; /* Gold color for the line */
+    border-radius: 2px; /* Rounded ends for the line */
 }
 
 /* Section Styles */
@@ -116,18 +200,28 @@ a:hover, a:focus { /* Added :focus for accessibility */
 
 /* Utility and Component Styles */
 .loader {
-    border: 8px solid #333333; 
-    border-top: 8px solid #FFB612; /* Gold spinner color */
+    width: 60px; /* Increased size */
+    height: 60px; /* Increased size */
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-    margin: 30px auto; /* Increased margin */
+    background-color: #FFB612; /* Gold */
+    margin: 40px auto; /* Adjusted margin */
+    animation: pulse 1.5s infinite ease-in-out; /* New animation */
 }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+@keyframes pulse {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.7;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 1;
+        background-color: #5A0025; /* Burgundy at peak */
+    }
+    100% {
+        transform: scale(0.8);
+        opacity: 0.7;
+    }
 }
 
 .hidden {
@@ -135,38 +229,131 @@ a:hover, a:focus { /* Added :focus for accessibility */
 }
 
 .error-message {
-    color: #FFCCCC; /* Lighter red text for better readability on dark bg */
-    background-color: rgba(100, 0, 0, 0.8); /* Darker, more opaque red background */
-    padding: 15px; /* Increased padding */
-    border-radius: 5px;
-    text-align: center;
-    border: 1px solid #FFB612; /* Gold border */
-    margin: 20px 0; /* Added vertical margin */
+    color: #FFFFFF; /* White text for high contrast */
+    background-color: #5A0025; /* Burgundy background */
+    padding: 15px 20px 15px 45px; /* Increased padding, left padding for icon */
+    border-radius: 8px; /* Slightly more rounded corners */
+    text-align: left; /* Align text to the left, icon on the left */
+    border: 2px solid #FFB612; /* Thicker Gold border */
+    margin: 25px 0; /* Adjusted vertical margin */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+    position: relative; /* For pseudo-element positioning */
+    font-weight: bold;
+}
+
+.error-message::before {
+    content: "✕"; /* Unicode multiplication sign as an X icon */
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #FFB612; /* Gold icon color */
+    font-size: 1.5em;
+    font-weight: bold;
 }
 
 /* Content-Specific Styles (Articles, Podcasts) */
 article, .podcast-item {
-    margin-bottom: 25px; 
-    padding-bottom: 15px;
-    border-bottom: 1px dashed #5A0025; /* Burgundy dashed separator */
+    margin-bottom: 30px; /* Increased margin for better separation */
+    padding: 25px; /* Slightly increased padding */
+    border: 1px solid #4a001f; /* Slightly darker Burgundy border */
+    border-radius: 8px; /* More rounded corners */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease; /* Added background-color transition */
+    background-color: rgba(10, 10, 10, 0.5); /* Darker, semi-transparent background for card effect */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5); /* Default shadow to make it pop */
 }
 
-article:last-child, .podcast-item:last-child {
-    border-bottom: none; /* Remove border for the last item */
+article:hover, .podcast-item:hover {
+    transform: translateY(-8px); /* More pronounced lift effect */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.8); /* Enhanced shadow on hover */
+    border-color: #FFB612; /* Gold border highlight on hover */
+    background-color: rgba(20, 20, 20, 0.6); /* Slightly lighter background on hover */
 }
+
+/* Remove bottom border for last child if using individual borders now, or keep if it's a separator style */
+/* article:last-child, .podcast-item:last-child {
+    border-bottom: none; 
+} */
 
 article h3, .podcast-item h3 { /* Assuming H3s are used inside articles/podcasts */
     color: #FFD700; /* A slightly different gold for sub-headings */
     margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 1.5em;
+    margin-bottom: 15px; /* Increased bottom margin */
+    font-size: 1.6em; /* Slightly larger */
+    font-weight: bold; /* Make h3 bold */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.4); /* Subtle shadow for h3 */
 }
+
+article p, .podcast-item p { /* Targeting paragraphs specifically within these items */
+    line-height: 1.65; /* Adjusted line-height for readability in cards */
+    color: #E0E0E0; /* Slightly off-white for better contrast on dark card bg */
+}
+
+/* Styles for Dynamically Loaded Content */
+#teams-data p, #temporada-data p { /* Common base for items in these sections */
+    background-color: rgba(15, 15, 15, 0.4); /* Slightly different dark background */
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: 1px solid #5A0025; /* Burgundy border */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+#teams-data p:hover, #temporada-data p:hover { /* Subtle hover for these dynamic items */
+    background-color: rgba(25, 25, 25, 0.55);
+    border-color: #FFB612; /* Gold border on hover */
+}
+
+#teams-data p { /* Specific styling for match items */
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+    align-items: center;
+    justify-content: space-between;
+}
+
+#teams-data img {
+    max-height: 40px; /* Control logo size */
+    width: auto; /* Maintain aspect ratio */
+    margin: 0 10px; /* Space around logos */
+    vertical-align: middle; /* Align with text */
+}
+
+#teams-data span.team-name { /* Assuming team names can be wrapped in spans by script, or style direct text */
+    font-weight: bold;
+    color: #FFD700; /* Lighter gold for team names */
+}
+
+#teams-data span.score {
+    font-weight: bold;
+    color: #FFFFFF;
+    margin: 0 10px;
+}
+
+#teams-data span.date-status {
+    color: #CCCCCC;
+    font-size: 0.9em;
+    flex-basis: 100%; /* Make date/status take full width if it wraps */
+    text-align: center;
+    margin-top: 5px;
+}
+
+#temporada-data p { /* Specific styling for standings paragraph */
+    text-align: center;
+    font-size: 1.4em; /* Larger font for standings */
+    font-weight: bold;
+    color: #FFB612; /* Gold text */
+    background-color: rgba(40, 10, 10, 0.6); /* Slightly more prominent background */
+}
+
 
 audio {
     width: 100%;
-    margin-top: 15px; /* Increased space */
-    border-radius: 5px;
+    margin-top: 20px; /* Slightly more space */
+    border-radius: 6px; /* Consistent with other interactive elements */
     /* Consider filter: invert(1) brightness(0.8) for a quick dark theme if needed, but default is fine */
+    border: 1px solid #5A0025; /* Subtle burgundy border */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3); /* Subtle shadow to lift it slightly */
 }
 
 /* Footer Styles */

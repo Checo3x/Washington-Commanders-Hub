@@ -469,4 +469,109 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchStandingsData();
     fetchArticles();
     fetchPodcasts();
+
+    // Particle Animation for Header
+    const canvas = document.getElementById('header-particles');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let particlesArray = [];
+        const particleColors = ['#FFB612', '#FFFFFF', '#FFD700']; // Gold, White, Lighter Gold
+
+        // Set canvas dimensions
+        function resizeCanvas() {
+            const header = document.querySelector('header');
+            if (!header) return; // Guard against header not being found
+            canvas.width = header.offsetWidth;
+            canvas.height = header.offsetHeight;
+        }
+
+        // Call resizeCanvas initially and on window resize
+        resizeCanvas(); // Initial call
+        window.addEventListener('resize', resizeCanvas); // Adjust on resize
+
+        const numberOfParticles = 50; // Keep it low for subtlety and performance
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height; 
+                this.size = Math.random() * 2.5 + 0.5; 
+                this.speedY = (Math.random() * 0.4 + 0.1) * -1; // Slow upward movement (0.1 to 0.5 pixels per frame)
+                this.color = particleColors[Math.floor(Math.random() * particleColors.length)];
+                this.opacity = Math.random() * 0.4 + 0.1; // Start with low opacity (0.1 to 0.5)
+                this.initialOpacity = this.opacity; // Store initial opacity for reset
+            }
+            update() {
+                this.y += this.speedY;
+                this.opacity -= 0.002; // Fade out very slowly
+
+                if (this.y < 0 || this.opacity <= 0) {
+                    this.x = Math.random() * canvas.width;
+                    this.y = canvas.height + this.size; 
+                    this.opacity = this.initialOpacity; // Reset to its initial random opacity
+                    this.size = Math.random() * 2.5 + 0.5;
+                    this.speedY = (Math.random() * 0.4 + 0.1) * -1;
+                    this.color = particleColors[Math.floor(Math.random() * particleColors.length)];
+                }
+            }
+            draw() {
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particlesArray = [];
+            if (canvas.width === 0 || canvas.height === 0) return; // Don't init if canvas has no dimensions
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        let animationFrameId = null;
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            ctx.globalAlpha = 1; // Reset globalAlpha after drawing all particles
+            animationFrameId = requestAnimationFrame(animateParticles);
+        }
+
+        // Check for reduced motion preference
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        
+        function startAnimation() {
+            if (animationFrameId) cancelAnimationFrame(animationFrameId); // Cancel previous animation frame
+            resizeCanvas(); // Ensure canvas is sized correctly
+            initParticles(); 
+            if (particlesArray.length > 0) { // Only animate if particles were initialized
+                animateParticles();
+            }
+        }
+
+        if (!prefersReducedMotion.matches) {
+            startAnimation(); // Start animation
+            
+            // Re-initialize particles on resize for new canvas dimensions
+            let resizeTimer;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                    if (!prefersReducedMotion.matches) { // Check again in case preference changed
+                       startAnimation();
+                    } else {
+                        if (animationFrameId) cancelAnimationFrame(animationFrameId);
+                        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas if motion is now reduced
+                    }
+                }, 250); // Debounce resize event
+            });
+        } else {
+            console.log("Particle animation disabled due to reduced motion preference.");
+        }
+    }
 });
