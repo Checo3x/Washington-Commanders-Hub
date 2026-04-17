@@ -1,44 +1,31 @@
 # Washington Commanders Hub
 
-Un hub visual para seguir a los **Washington Commanders** con partidos, clasificaciones, artículos y podcasts en una sola interfaz.
+Washington Commanders Hub es una web fan-made para seguir al equipo con una sola vista: calendario, clasificación, artículos y podcasts.
 
-## Demo
+## Qué hace
 
-Despliegue recomendado en Vercel. Si lo publicas, añade aquí tu URL final.
-
-## Qué incluye
-
-- Calendario de partidos del equipo
-- Clasificaciones de la NFL
-- Artículos y podcasts desde un endpoint local
-- Animación de partículas en el header
-- Carga con estados de error y caché en `localStorage`
+- Muestra los próximos partidos y resultados del equipo.
+- Consulta la clasificación de la NFL.
+- Carga artículos y podcasts desde un contenido local.
+- Guarda en caché HTML renderizado para acelerar la navegación.
+- Incluye una animación ligera en el header.
 
 ## Stack
 
-- HTML5, CSS3 y JavaScript
-- Vite
-- API routes en Vercel
-- ESPN API como fuente de datos
+- HTML, CSS y JavaScript
+- Vite para desarrollo y build
+- Serverless functions en `/api`
+- ESPN como fuente de datos deportivos
 
-## Estructura del proyecto
+## Estructura
 
-- `index.html` — página principal
-- `styles.css` — estilos y diseño visual
-- `scripts.js` — lógica de fetch, caché y renderizado
-- `api/` — funciones serverless para ESPN y contenido local
-- `data/content.json` — artículos y podcasts del hub
-- `images/` — recursos visuales
+- `index.html`: estructura principal de la web
+- `styles.css`: estilos visuales
+- `scripts.js`: lógica de frontend y renderizado
+- `api/`: funciones serverless
+- `data/content.json`: contenido de artículos y podcasts
 
-## Requisitos
-
-Para las funciones que consultan ESPN, necesitas definir esta variable de entorno en Vercel o en local:
-
-```bash
-ESPN_API_KEY=tu_clave
-```
-
-## Desarrollo local
+## Desarrollo
 
 ```bash
 npm install
@@ -51,13 +38,6 @@ npm run dev
 npm run build
 ```
 
-## Despliegue
+## Notas
 
-El proyecto está preparado para Vercel con funciones en `/api`.
-
-## Mejoras pendientes
-
-- Reescribir `README` con capturas y explicación de arquitectura
-- Añadir tests de las funciones de procesamiento
-- Separar mejor la lógica de presentación en módulos
-- Mejorar accesibilidad en algunos componentes interactivos
+El proyecto usa funciones serverless para consultar ESPN y un archivo local JSON para el contenido editorial.

@@ -1,23 +1,16 @@
 {
-  "name": "washington-commanders-hub",
-  "version": "1.1.0",
-  "description": "Hub visual para los Washington Commanders con partidos, clasificaciones, artículos y podcasts.",
-  "type": "module",
+  "name": "commanders-hub",
+  "version": "1.0.0",
+  "description": "Una aplicación web dedicada a los Washington Commanders: partidos, clasificaciones y contenidos exclusivos",
+  "main": "scripts.js",
   "scripts": {
     "dev": "vite",
     "start": "vite",
     "build": "vite build",
-    "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write ."
   },
-  "keywords": [
-    "washington commanders",
-    "nfl",
-    "football",
-    "sports dashboard",
-    "espn"
-  ],
+  "keywords": ["Washington Commanders", "NFL", "fútbol americano"],
   "author": "Checo3x",
   "license": "MIT",
   "engines": {
