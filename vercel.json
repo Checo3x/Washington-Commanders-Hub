@@ -1,16 +1,13 @@
 {
-  "version": 2,
-  "builds": [
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
     {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
+      "source": "/api/espn-events",
+      "destination": "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard"
     },
     {
-      "src": "api/**/*.js",
-      "use": "@vercel/node"
+      "source": "/api/espn-standings",
+      "destination": "https://site.api.espn.com/apis/site/v2/sports/football/nfl/standings"
     }
   ]
 }
