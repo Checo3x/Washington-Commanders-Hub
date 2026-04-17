@@ -8,6 +8,10 @@
     {
       "source": "/api/espn-standings",
       "destination": "https://site.api.espn.com/apis/site/v2/sports/football/nfl/standings"
+    },
+    {
+      "source": "/api/content",
+      "destination": "/data/content.json"
     }
   ]
 }
